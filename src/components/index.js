@@ -1,2 +1,3 @@
-export { default as TranslationOutput } from './translation-output'
-export { default as UserInput } from './user-input'
+export { default as CalculationDisplay } from './calculation-display'
+export { default as NumberPad } from './number-pad'
+export { default as TranslationDisplay } from './translation-display'

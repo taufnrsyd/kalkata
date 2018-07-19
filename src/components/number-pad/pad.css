@@ -1,0 +1,29 @@
+.kk.pad {
+  width: 25vw;
+  height: 25vw;
+  padding: 0;
+  float: left;
+  font-size: 1.5rem;
+  font-family: inherit;
+  font-weight: normal;
+  text-align: center;
+  line-height: 25vw;
+  color: #989898;
+  background: #fafafa;
+  border: none;
+}
+
+.kk.pad[class*="num-"] { background: #ffffff; }
+
+.kk.pad.alclr { color: #fda085; }
+.kk.pad.rmcr { color: #f6d365; }
+.kk.pad.rstg { background: #f0f0f0; }
+
+.kk.pad.rsex {
+  font-size: 2rem;
+  color: #ffffff;
+  background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+}
+
+.kk.pad:active { background: #e3f2fd; }
+.kk.pad:focus { outline: none; }

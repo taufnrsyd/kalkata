@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
-import { TranslationOutput, UserInput } from './components'
+
 import translation from './services/translation'
+import { NUMBER_PADS, PAD_ACTIONS } from './config/constant'
+import {
+  CalculationDisplay,
+  NumberPad,
+  TranslationDisplay,
+} from './components'
 import './app.css'
 
 class App extends Component {
@@ -10,21 +16,26 @@ class App extends Component {
 
     /** Words-translated input */
     output: '',
+
+    /** List of buttons on number pad */
+    pads: NUMBER_PADS,
   }
 
   /**
-   * Input change event handler.
-   * @param {object} e - Synthetic event
+   * Number pad tap event handler.
+   * @param {object} pad - Pad data
    */
-  handleInputChange(e) {
-    const input = e.target.value
+  handleNumberPadTap(pad) {
+    if (pad.type === PAD_ACTIONS.NUMBER) {
+      let input = `${this.state.input}${pad.key}`
 
-    translation.make(input).then(
-      () => this.setState({
-        input,
-        output: translation.value(),
-      })
-    )
+      translation.make(input).then(
+        () => this.setState({
+          input,
+          output: translation.value()
+        })
+      )
+    }
   }
 
   /**
@@ -32,13 +43,16 @@ class App extends Component {
    */
   render() {
     return (
-      <div>
-        <UserInput
-          onChange={this.handleInputChange.bind(this)}
-          value={this.state.input}
-        />
+      <div className="the-app">
+        <div className="display-area">
+          <TranslationDisplay translation={this.state.output} />
+          <CalculationDisplay calculation={this.state.input} />
+        </div>
 
-        <TranslationOutput translation={this.state.output} />
+        <NumberPad
+          pads={this.state.pads}
+          onClick={this.handleNumberPadTap.bind(this)}
+        />
       </div>
     )
   }
