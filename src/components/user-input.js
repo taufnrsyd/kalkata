@@ -4,6 +4,8 @@ import { func, number, oneOfType, string } from 'prop-types'
 
 /**
  * User input component.
+ * @param {function} onChange - onChange handler
+ * @param {number} value - Input value
  */
 const UserInput = ({ onChange, value }) => (
   <Card>
