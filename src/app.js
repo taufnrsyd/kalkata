@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
-import { TranslationOutput, UserInput } from './components'
+
 import translation from './services/translation'
+import { NUMBER_PADS } from './config/constant'
+import {
+  NumberPad,
+  // TranslationOutput,
+  // UserInput,
+} from './components'
 import './app.css'
 
 class App extends Component {
@@ -10,6 +16,9 @@ class App extends Component {
 
     /** Words-translated input */
     output: '',
+
+    /** List of buttons on number pad */
+    pads: NUMBER_PADS,
   }
 
   /**
@@ -28,17 +37,33 @@ class App extends Component {
   }
 
   /**
+   * Number pad tap event handler.
+   * @param {object} pad - Pad data
+   */
+  handleNumberPadTap(pad) {
+    console.log('Pad clicked', pad)
+  }
+
+  /**
    * Render the component.
    */
   render() {
     return (
-      <div>
+      <div className="the-app">
+        {/*
         <UserInput
           onChange={this.handleInputChange.bind(this)}
           value={this.state.input}
         />
-
         <TranslationOutput translation={this.state.output} />
+        */}
+
+        <div className="display-area"></div>
+
+        <NumberPad
+          pads={this.state.pads}
+          onClick={this.handleNumberPadTap.bind(this)}
+        />
       </div>
     )
   }
