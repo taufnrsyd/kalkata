@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import translation from './services/translation'
-import { NUMBER_PADS } from './config/constant'
+import { NUMBER_PADS, PAD_ACTIONS } from './config/constant'
 import {
   NumberPad,
   // TranslationOutput,
@@ -22,26 +22,24 @@ class App extends Component {
   }
 
   /**
-   * Input change event handler.
-   * @param {object} e - Synthetic event
-   */
-  handleInputChange(e) {
-    const input = e.target.value
-
-    translation.make(input).then(
-      () => this.setState({
-        input,
-        output: translation.value(),
-      })
-    )
-  }
-
-  /**
    * Number pad tap event handler.
    * @param {object} pad - Pad data
    */
   handleNumberPadTap(pad) {
-    console.log('Pad clicked', pad)
+    if (pad.type === PAD_ACTIONS.NUMBER) {
+      let input = `${this.state.input}${pad.key}`
+
+      translation.make(input).then(
+        () => {
+          this.setState({
+            input,
+            output: translation.value()
+          })
+          console.log(this.state.input)
+          console.log(this.state.output)
+        }
+      )
+    }
   }
 
   /**

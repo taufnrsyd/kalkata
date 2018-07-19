@@ -1,5 +1,5 @@
 import { numbers } from './dictionary'
-import { isDirectlyTranslatable, to } from './helper'
+import { isDirectlyTranslatable, isNil, to } from './helper'
 
 /**
  * Translate the group of threes into text.
@@ -41,12 +41,14 @@ export const translateGroupOfThrees = threes => threes.map(group => {
  * @param {array} hundreds - Translated groups
  */
 export const translateUnitLevel = hundreds => hundreds.map((unit, i) => {
-  switch (i) {
-    case 0: return unit
-    case 1: return to.thousand(unit)
-    default: return to.million(unit)
+  switch (true) {
+    case i % 4 === 1: return to.thousand(unit)
+    case i % 4 === 2: return to.million(unit)
+    case i % 4 === 3: return to.billion(unit)
+    case i % 4 === 0 && i > 0: return to.trillion(unit)
+    default: return isNil(unit) ? '' : unit
   }
-}).reverse().join(' ').trim()
+}).reverse().filter(text => text !== '').join(' ').trim()
 
 /**
  * Group the number's digits into group of threes.

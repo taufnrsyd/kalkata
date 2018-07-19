@@ -6,6 +6,12 @@ import { numbers } from './dictionary'
  */
 export const isDirectlyTranslatable = num => typeof numbers[num] !== 'undefined'
 
+/**
+ * Check if text is equal to zero.
+ * @param {string} text - Number input
+ */
+export const isNil = text => text === 'nol'
+
 /** Translate `foo` item to something else */
 export const to = {
   /**
@@ -31,7 +37,7 @@ export const to = {
    * @param {string} numtext - Number text
    */
   thousand: numtext => {
-    if (numtext === 'nol') return ''
+    if (isNil(numtext)) return ''
     else if (numtext === 'satu') return 'seribu'
     else return `${numtext} ribu`
   },
@@ -40,5 +46,17 @@ export const to = {
    * Translate single digit number to millions.
    * @param {string} numtext - Number text
    */
-  million: numtext => `${numtext} juta`,
+  million: numtext => isNil(numtext) ? '' : `${numtext} juta`,
+
+  /**
+   * Translate single digit number to billions.
+   * @param {string} numtext - Number text
+   */
+  billion: numtext => isNil(numtext) ? '' : `${numtext} miliar`,
+
+  /**
+   * Translate single digit number to trillions.
+   * @param {string} numtext - Number text
+   */
+  trillion: numtext => isNil(numtext) ? 'triliun' : `${numtext} triliun`,
 }
