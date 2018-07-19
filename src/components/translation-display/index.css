@@ -1,0 +1,17 @@
+.kk.trns {
+  width: 100%;
+  height: calc(100% - 2.8571428571em);
+  padding: 0.8571428571em 0.8571428571em 0;
+}
+
+.kk.trtx {
+  width:100%;
+  height: 100%;
+  padding-bottom: 0.8571428571em;
+  overflow: auto;
+}
+
+.kk.trtx {
+  font-size: 1.1428571429rem;
+  color: #ffffff;
+}

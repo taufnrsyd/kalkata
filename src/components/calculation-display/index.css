@@ -1,0 +1,17 @@
+.kk.calc {
+  padding-right: 0.8571428571em;
+}
+
+.kk.cltx {
+  width: 100%;
+  padding-left: 0.8571428571em;
+  overflow-x: visible;
+  text-align: right;
+}
+
+.kk.calc p {
+  font-size: 1.5rem;
+  line-height: 2.8571428571rem;
+  color: #ffffff;
+  direction: rtl;
+}

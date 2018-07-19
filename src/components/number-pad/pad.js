@@ -1,5 +1,4 @@
 import React from 'react'
-import {} from 'semantic-ui-react'
 import { func, object } from 'prop-types'
 
 import './pad.css'
