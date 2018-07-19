@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { TranslationOutput, UserInput } from './components'
+import translation from './services/translation'
 import './app.css'
 
 class App extends Component {
   state = {
     /** User input value */
-    input: 0,
+    input: '',
 
     /** Words-translated input */
     output: '',
@@ -16,10 +17,14 @@ class App extends Component {
    * @param {object} e - Synthetic event
    */
   handleInputChange(e) {
-    this.setState({
-      input: e.target.value,
-      output: e.target.value,
-    })
+    const input = e.target.value
+
+    translation.make(input).then(
+      () => this.setState({
+        input,
+        output: translation.value(),
+      })
+    )
   }
 
   /**
