@@ -12,13 +12,52 @@ import './app.css'
 class App extends Component {
   state = {
     /** User input value */
-    input: '',
-
-    /** Words-translated input */
-    output: '',
+    number: [''],
 
     /** List of buttons on number pad */
     pads: NUMBER_PADS,
+
+    /** Pointer for the calculation object to be interacted with */
+    pointer: 0,
+
+    /** Words-translated input */
+    text: [''],
+  }
+
+  /**
+   * Move target pointer.
+   * @param {boolean} isForward - Move forward
+   * @param {boolean} forNumber - Point for number
+   */
+  movePointer({ isForward, forNumber }) {
+    let number = [...this.state.number]
+    let text = [...this.state.text]
+    let { pointer } = this.state
+
+    if (isForward) {
+      number.push(forNumber ? '' : {})
+      text.push(forNumber ? '' : {})
+      pointer++
+    } else {
+      number.pop()
+      text.pop()
+      pointer--
+    }
+
+    this.setState({ number, text, pointer })
+  }
+
+  /**
+   * Callback handler for translation promise.
+   * @param {object} res - Translation result
+   */
+  updateNumberAndText(res) {
+    let number = [...this.state.number]
+    let text = [...this.state.text]
+
+    number[this.state.pointer] = res.input
+    text[this.state.pointer] = res.translation
+    this.setState({ number, text })
   }
 
   /**
@@ -39,30 +78,38 @@ class App extends Component {
    * @param {object} pad - Pad data
    */
   handleNumberInput(pad) {
-    const input = `${this.state.input}${pad.key}`
+    let pointed = this.state.number[this.state.pointer]
+    let input
 
-    translation.make(input).then(
-      () => this.setState({
-        input,
-        output: translation.value()
-      })
-    )
+    if (typeof pointed === 'object') {
+      this.movePointer({ isForward: true, forNumber: true })
+    }
+
+    pointed = this.state.number[this.state.pointer]
+    input = `${pointed}${pad.key}`
+
+    translation.make(input).then(this.updateNumberAndText.bind(this))
+  }
+
+  handleOperandInput(pad) {
+    //
   }
 
   /**
    * Handle number input removal.
    */
   handleInputRemove() {
-    let { input } = this.state
+    let pointed = this.state.number[this.state.pointer]
+    let input
 
-    input = input.slice(0, input.length - 1)
+    if (typeof pointed === 'object') {
+      this.movePointer({ isForward: false })
+    }
 
-    translation.make(input).then(
-      () => this.setState({
-        input,
-        output: translation.value()
-      })
-    )
+    pointed = this.state.number[this.state.pointer]
+    input = pointed.slice(0, pointed.length - 1)
+
+    translation.make(input).then(this.updateNumberAndText.bind(this))
   }
 
   /**
@@ -70,8 +117,9 @@ class App extends Component {
    */
   clearCalculation() {
     this.setState({
-      input: '',
-      output: ''
+      number: [''],
+      pointer: 0,
+      text: [''],
     })
   }
 
@@ -79,11 +127,14 @@ class App extends Component {
    * Render the component.
    */
   render() {
+    const number = this.state.number.join(' ').trim()
+    const text = this.state.text.join(' ').trim()
+
     return (
       <div className="the-app">
         <div className="display-area">
-          <TranslationDisplay translation={this.state.output} />
-          <CalculationDisplay calculation={this.state.input} />
+          <TranslationDisplay translation={text} />
+          <CalculationDisplay calculation={number} />
         </div>
 
         <NumberPad

@@ -6,12 +6,6 @@ import {
   translateUnitLevel,
 } from './make'
 
-/** Holds singleton data for the translation service */
-const state = {
-  /** Latest translated text */
-  translation: ''
-}
-
 export default {
   /**
    * Make a new translation based on input.
@@ -26,23 +20,17 @@ export default {
     // is completed.
 
     if (input === '') {
-      state.translation = ''
-      resolve()
+      resolve({ input, translation: '' })
+
     } else if (isDirectlyTranslatable(input)) {
-      state.translation = numbers[input]
-      resolve()
+      resolve({ input, translation: numbers[input] })
+
     } else {
       const threes = groupNumberToThrees(input)
       const hundreds = translateGroupOfThrees(threes)
-      const translated = translateUnitLevel(hundreds)
+      const translation = translateUnitLevel(hundreds)
 
-      state.translation = translated
-      resolve()
+      resolve({ input, translation })
     }
   }),
-
-  /**
-   * Get the current translation result.
-   */
-  value: () => state.translation,
 }
