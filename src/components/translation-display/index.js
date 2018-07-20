@@ -1,6 +1,6 @@
 import React from 'react'
 import { string } from 'prop-types'
-import { capitalizeText } from '../../services/utils'
+// import { capitalizeText } from '../../services/utils'
 import './index.css'
 
 /**
@@ -10,7 +10,7 @@ import './index.css'
 const TranslationDisplay = ({ translation }) => (
   <div className="kk trns">
     <div className="kk trtx">
-      <p>{capitalizeText(translation)}</p>
+      <p dangerouslySetInnerHTML={{__html: translation}} />
     </div>
   </div>
 )

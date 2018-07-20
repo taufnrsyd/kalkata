@@ -12,6 +12,12 @@ export const isDirectlyTranslatable = num => typeof numbers[num] !== 'undefined'
  */
 export const isNil = text => text === 'nol'
 
+/**
+ * Wrap the text in HTML element of choice.
+ * @param {string} text - Target text
+ */
+export const wrapText = text => `<span>${text}</span>`
+
 /** Translate `foo` item to something else */
 export const to = {
   /**

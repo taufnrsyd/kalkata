@@ -2,6 +2,7 @@
   width: 100%;
   height: calc(100% - 2.8571428571em);
   padding: 0.8571428571em 0.8571428571em 0;
+  background: #404d5d;
 }
 
 .kk.trtx {
@@ -14,4 +15,12 @@
 .kk.trtx {
   font-size: 1.1428571429rem;
   color: #ffffff;
+}
+
+.kk.trtx span:nth-child(odd) {
+  color: #ffffff;
+}
+
+.kk.trtx span:nth-child(even) {
+  color: #fda085;
 }

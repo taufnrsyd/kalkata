@@ -7,3 +7,5 @@
   display: table;
   clear: both;
 }
+
+.kk.npad.row:last-child .kk.pad { border-bottom: none; }

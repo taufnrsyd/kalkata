@@ -1,5 +1,5 @@
 import { numbers } from './dictionary'
-import { isDirectlyTranslatable } from './helper'
+import { isDirectlyTranslatable, wrapText } from './helper'
 import {
   groupNumberToThrees,
   translateGroupOfThrees,
@@ -23,7 +23,7 @@ export default {
       resolve({ input, translation: '' })
 
     } else if (isDirectlyTranslatable(input)) {
-      resolve({ input, translation: numbers[input] })
+      resolve({ input, translation: wrapText(numbers[input]) })
 
     } else {
       const threes = groupNumberToThrees(input)
