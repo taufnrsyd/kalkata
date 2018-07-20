@@ -26,16 +26,53 @@ class App extends Component {
    * @param {object} pad - Pad data
    */
   handleNumberPadTap(pad) {
-    if (pad.type === PAD_ACTIONS.NUMBER) {
-      let input = `${this.state.input}${pad.key}`
-
-      translation.make(input).then(
-        () => this.setState({
-          input,
-          output: translation.value()
-        })
-      )
+    switch (pad.type) {
+      case PAD_ACTIONS.NUMBER: return this.handleNumberInput(pad)
+      case PAD_ACTIONS.REMOVE: return this.handleInputRemove()
+      case PAD_ACTIONS.CLEAR: return this.clearCalculation()
+      default: return
     }
+  }
+
+  /**
+   * Handle number input tap.
+   * @param {object} pad - Pad data
+   */
+  handleNumberInput(pad) {
+    const input = `${this.state.input}${pad.key}`
+
+    translation.make(input).then(
+      () => this.setState({
+        input,
+        output: translation.value()
+      })
+    )
+  }
+
+  /**
+   * Handle number input removal.
+   */
+  handleInputRemove() {
+    let { input } = this.state
+
+    input = input.slice(0, input.length - 1)
+
+    translation.make(input).then(
+      () => this.setState({
+        input,
+        output: translation.value()
+      })
+    )
+  }
+
+  /**
+   * Clear the whole calculation.
+   */
+  clearCalculation() {
+    this.setState({
+      input: '',
+      output: ''
+    })
   }
 
   /**

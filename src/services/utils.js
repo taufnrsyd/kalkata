@@ -7,7 +7,7 @@ import { groupNumberToThrees } from './translation/make'
 export const formatNumber = num => groupNumberToThrees(num)
   .map(group => group.join(''))
   .reverse()
-  .join(',')
+  .join('.')
   .replace(/^0+/, '')
 
 /**
