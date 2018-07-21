@@ -1,7 +1,7 @@
 .kk.trns {
   width: 100%;
   height: calc(100% - 2.8571428571em);
-  padding: 0.8571428571em 0.8571428571em 0;
+  padding: 2em 0.8571428571em 0;
   background: #404d5d;
 }
 
@@ -17,10 +17,8 @@
   color: #ffffff;
 }
 
-.kk.trtx span:nth-child(odd) {
-  color: #ffffff;
-}
+.kk.trtx p { margin-bottom: 0.125em; }
 
-.kk.trtx span:nth-child(even) {
-  color: #fda085;
-}
+.kk.trtx span.num:nth-child(odd) { color: #ffffff; }
+.kk.trtx span.num:nth-child(even) { color: #fda085; }
+.kk.trtx span.oprd { color: #a7b4bb; }

@@ -5,6 +5,7 @@ import {
   translateGroupOfThrees,
   translateUnitLevel,
 } from './make'
+import { capitalizeText, formatNumber } from '../utils'
 
 export default {
   /**
@@ -23,7 +24,7 @@ export default {
       resolve({ input, translation: '' })
 
     } else if (isDirectlyTranslatable(input)) {
-      resolve({ input, translation: wrapText(numbers[input]) })
+      resolve({ input, translation: wrapText(capitalizeText(numbers[input])) })
 
     } else {
       const threes = groupNumberToThrees(input)
@@ -33,4 +34,30 @@ export default {
       resolve({ input, translation })
     }
   }),
+
+  /**
+   * Translate the operand into text.
+   * @param {string} key - Operand key
+   */
+  operand: key => {
+    switch (key) {
+      case '%': return wrapText('Modulus', { oprd: true })
+      case '/': return wrapText('Dibagi', { oprd: true })
+      case '*': return wrapText('Dikali', { oprd: true })
+      case '-': return wrapText('Dikurang', { oprd: true })
+      case '+': return wrapText('Ditambah', { oprd: true })
+      default: return wrapText('', { oprd: true })
+    }
+  },
+
+  /**
+   * Weave the number data into human-readable text.
+   * @param {array} data - Number data
+   */
+  weaveNumber: data => data.map(
+    item => item === null ? '' :
+      typeof item === 'object' ?
+      item.key :
+      formatNumber(item)
+  ).reverse().join(' ').trim(),
 }

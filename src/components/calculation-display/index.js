@@ -1,6 +1,5 @@
 import React from 'react'
 import { string } from 'prop-types'
-import { formatNumber } from '../../services/utils'
 import './index.css'
 
 /**
@@ -10,7 +9,7 @@ import './index.css'
 const CalculationDisplay = ({ calculation }) => (
   <div className="kk calc">
     <div className="kk cltx">
-      <p>{formatNumber(calculation)}</p>
+      <p>{calculation}</p>
     </div>
   </div>
 )

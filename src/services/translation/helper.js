@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import { numbers } from './dictionary'
 
 /**
@@ -15,8 +16,12 @@ export const isNil = text => text === 'nol'
 /**
  * Wrap the text in HTML element of choice.
  * @param {string} text - Target text
+ * @param {object} className - Optional classes
  */
-export const wrapText = text => `<span>${text}</span>`
+export const wrapText = (text, className) => {
+  const classes = cx(className || 'num')
+  return `<span class="${classes}">${text}</span>`
+}
 
 /** Translate `foo` item to something else */
 export const to = {
@@ -44,6 +49,8 @@ export const to = {
    */
   thousand: numtext => {
     if (isNil(numtext)) return ''
+    // this looks ridiculous but it's the simplest quick hack for casing
+    else if (numtext === 'Satu') return 'Seribu'
     else if (numtext === 'satu') return 'seribu'
     else return `${numtext} ribu`
   },

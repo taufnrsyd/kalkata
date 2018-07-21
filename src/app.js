@@ -35,8 +35,8 @@ class App extends Component {
     let { pointer } = this.state
 
     if (isForward) {
-      number.push(forNumber ? '' : {})
-      text.push(forNumber ? '' : {})
+      number.push(forNumber ? '' : null)
+      text.push(forNumber ? '' : null)
       pointer++
     } else {
       number.pop()
@@ -67,6 +67,7 @@ class App extends Component {
   handleNumberPadTap(pad) {
     switch (pad.type) {
       case PAD_ACTIONS.NUMBER: return this.handleNumberInput(pad)
+      case PAD_ACTIONS.OPERAND: return this.handleOperandInput(pad)
       case PAD_ACTIONS.REMOVE: return this.handleInputRemove()
       case PAD_ACTIONS.CLEAR: return this.clearCalculation()
       default: return
@@ -78,21 +79,41 @@ class App extends Component {
    * @param {object} pad - Pad data
    */
   handleNumberInput(pad) {
-    let pointed = this.state.number[this.state.pointer]
-    let input
+    const pointed = this.state.number[this.state.pointer]
+    // Wait out for pointer checker below
+    const waitOut = setTimeout(() => {
+      const number = this.state.number[this.state.pointer]
+      const input = `${number}${pad.key}`
+
+      clearTimeout(waitOut)
+      translation.make(input).then(this.updateNumberAndText.bind(this))
+    }, 50)
 
     if (typeof pointed === 'object') {
       this.movePointer({ isForward: true, forNumber: true })
     }
-
-    pointed = this.state.number[this.state.pointer]
-    input = `${pointed}${pad.key}`
-
-    translation.make(input).then(this.updateNumberAndText.bind(this))
   }
 
+  /**
+   * Handle operand input tap.
+   * @param {object} pad - Pad data
+   */
   handleOperandInput(pad) {
-    //
+    const pointed = this.state.number[this.state.pointer]
+    // Wait out for pointer checker below
+    const waitOut = setTimeout(() => {
+      let number = [...this.state.number]
+      let text = [...this.state.text]
+
+      clearTimeout(waitOut)
+      number[this.state.pointer] = pad
+      text[this.state.pointer] = translation.operand(pad.key)
+      this.setState({ number, text })
+    }, 50)
+
+    if (typeof pointed === 'string') {
+      this.movePointer({ isForward: true, forNumber: false })
+    }
   }
 
   /**
@@ -127,13 +148,12 @@ class App extends Component {
    * Render the component.
    */
   render() {
-    const number = this.state.number.join(' ').trim()
-    const text = this.state.text.join(' ').trim()
+    const number = translation.weaveNumber(this.state.number)
 
     return (
       <div className="the-app">
         <div className="display-area">
-          <TranslationDisplay translation={text} />
+          <TranslationDisplay translation={this.state.text} />
           <CalculationDisplay calculation={number} />
         </div>
 

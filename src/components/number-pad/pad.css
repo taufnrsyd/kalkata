@@ -1,13 +1,13 @@
 .kk.pad {
   width: 25vw;
-  height: 25vw;
+  height: 20vw;
   padding: 0;
   float: left;
   font-size: 1.5rem;
   font-family: inherit;
   font-weight: 300;
   text-align: center;
-  line-height: 25vw;
+  line-height: 20vw;
   color: #a7b4bb;
   background: transparent;
   border: none;

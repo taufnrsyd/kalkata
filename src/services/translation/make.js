@@ -1,5 +1,11 @@
 import { numbers } from './dictionary'
-import { isDirectlyTranslatable, isNil, to, wrapText } from './helper'
+import {
+  isDirectlyTranslatable,
+  isNil,
+  to,
+  wrapText,
+} from './helper'
+import { capitalizeText } from '../utils'
 
 /**
  * Translate the group of threes into text.
@@ -46,6 +52,8 @@ const emptyWrap = wrapText('')
  * @param {array} hundreds - Translated groups
  */
 export const translateUnitLevel = hundreds => hundreds.map((unit, i) => {
+  if (i === hundreds.length - 1) unit = capitalizeText(unit)
+
   switch (true) {
     case i % 4 === 1: return wrapText(to.thousand(unit))
     case i % 4 === 2: return wrapText(to.million(unit))

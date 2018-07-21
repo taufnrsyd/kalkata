@@ -6,7 +6,7 @@
 
 .display-area {
   width: 100vw;
-  height: calc(100% - 125vw);
+  height: calc(100% - 100vw);
   background: #3c4958;
   overflow: hidden;
 }

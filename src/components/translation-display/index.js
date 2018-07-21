@@ -1,23 +1,50 @@
-import React from 'react'
-import { string } from 'prop-types'
-// import { capitalizeText } from '../../services/utils'
+import React, { Component } from 'react'
+import { array } from 'prop-types'
 import './index.css'
 
-/**
- * Translation output display.
- * @param {string} translation - Translated content
- */
-const TranslationDisplay = ({ translation }) => (
-  <div className="kk trns">
-    <div className="kk trtx">
-      <p dangerouslySetInnerHTML={{__html: translation}} />
-    </div>
-  </div>
-)
+class TranslationDisplay extends Component {
+  static propTypes = {
+    /** Final translation to be displayed */
+    translation: array,
+  }
 
-TranslationDisplay.propTypes = {
-  /** Final translation to be displayed */
-  translation: string,
+  /**
+   * Setup constructor based on props.
+   * @param {object} props - Component props
+   */
+  constructor(props) {
+    super(props)
+    this.textWrapper = React.createRef()
+  }
+
+  /**
+   * Keep the view scrolled to bottom on content updated.
+   */
+  componentDidUpdate() {
+    const element = this.textWrapper.current
+    element.scrollTop = element.scrollHeight
+  }
+
+  /**
+   * Render the display.
+   */
+  render() {
+    return (
+      <div className="kk trns">
+        <div
+          className="kk trtx"
+          ref={this.textWrapper}
+        >
+          {this.props.translation.map((line, i) => (
+            <p
+              key={i}
+              dangerouslySetInnerHTML={{__html: line}}
+            />
+          ))}
+        </div>
+      </div>
+    )
+  }
 }
 
 export default TranslationDisplay
