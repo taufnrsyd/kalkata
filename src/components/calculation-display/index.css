@@ -6,12 +6,10 @@
   width: 100%;
   padding-left: 0.8571428571em;
   overflow-x: visible;
-  text-align: right;
 }
 
 .kk.calc p {
   font-size: 1rem;
   line-height: 2.8571428571rem;
   color: #a7b4bb;
-  direction: rtl;
 }

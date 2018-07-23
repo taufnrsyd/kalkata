@@ -78,7 +78,7 @@ class App extends Component {
     switch (pad.type) {
       case PAD_ACTIONS.NUMBER: return this.handleNumberInput(pad)
       case PAD_ACTIONS.OPERAND: return this.handleOperandInput(pad)
-      case PAD_ACTIONS.RESULT: return this.performCalculation()
+      case PAD_ACTIONS.RESULT: return this.performCalculation(pad)
       case PAD_ACTIONS.REMOVE: return this.handleInputRemove()
       case PAD_ACTIONS.CLEAR: return this.clearCalculation()
       default: return
@@ -129,11 +129,27 @@ class App extends Component {
 
   /**
    * Perform the calculation based on current calculation.
+   * @param {object} pad - Pad data
    */
-  performCalculation() {
-    calculation.perform(this.state.number).then(
-      resp => console.log(resp)
-    )
+  performCalculation(pad) {
+    calculation.perform(this.state.number)
+      .then(resp => translation.make(`${resp.result}`))
+      .then(resp => {
+        let number = [...this.state.number].concat([
+          pad,
+          resp.input
+        ])
+        let text = [...this.state.text].concat([
+          translation.operand(pad.key),
+          resp.translation
+        ])
+
+        this.setState({
+          number,
+          text,
+          isCalculated: true,
+        })
+      })
   }
 
   /**
@@ -178,6 +194,8 @@ class App extends Component {
    * Render the component.
    */
   render() {
+    console.log(this.state.text)
+    console.log(this.state.number)
     const number = translation.weaveNumber(this.state.number)
 
     return (

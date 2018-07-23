@@ -13,6 +13,10 @@ export default {
    * @param {number} input - User input
    */
   make: input => new Promise(resolve => {
+    const isNegativeNumber = input.charAt(0) === '-'
+    const num = isNegativeNumber ? input.slice(1) : input
+    const neg = wrapText('Negatif', { sgn: true })
+
     // DEVELOPER NOTE
     // --------------
     // We are using promise because translation might take some time to
@@ -20,16 +24,22 @@ export default {
     // retrieve the translation result before the translation process
     // is completed.
 
-    if (input === '') {
+    if (num === '') {
       resolve({ input, translation: '' })
 
-    } else if (isDirectlyTranslatable(input)) {
-      resolve({ input, translation: wrapText(capitalizeText(numbers[input])) })
+    } else if (isDirectlyTranslatable(num)) {
+      const text = numbers[num]
+      const translation = isNegativeNumber ?
+        `${neg} ${wrapText(text)}` :
+        wrapText(capitalizeText(text))
+
+      resolve({ input, translation })
 
     } else {
-      const threes = groupNumberToThrees(input)
+      const threes = groupNumberToThrees(num)
       const hundreds = translateGroupOfThrees(threes)
-      const translation = translateUnitLevel(hundreds)
+      const text = translateUnitLevel(hundreds, isNegativeNumber)
+      const translation = isNegativeNumber ? `${neg} ${text}` : text
 
       resolve({ input, translation })
     }
@@ -45,6 +55,7 @@ export default {
       case '*': return wrapText('Dikali', { oprd: true })
       case '-': return wrapText('Dikurang', { oprd: true })
       case '+': return wrapText('Ditambah', { oprd: true })
+      case '=': return wrapText('Sama dengan', { rs: true })
       default: return wrapText('', { oprd: true })
     }
   },
@@ -53,10 +64,18 @@ export default {
    * Weave the number data into human-readable text.
    * @param {array} data - Number data
    */
-  weaveNumber: data => data.map(
-    item => item === null ? '' :
-      typeof item === 'object' ?
-      item.key :
-      formatNumber(item)
-  ).reverse().join(' ').trim(),
+  weaveNumber: data => data
+    .map(item => {
+      if (item === null) return ''
+      else if (typeof item === 'object') return item.key
+
+      if (item.charAt(0) === '-') {
+        const formatted = formatNumber(item.slice(1))
+        return `-${formatted}`
+      } else {
+        return formatNumber(item)
+      }
+    })
+    .join(' ')
+    .trim(),
 }

@@ -21,3 +21,8 @@
 .kk.trtx span.num:nth-child(odd) { color: #ffffff; }
 .kk.trtx span.num:nth-child(even) { color: #fda085; }
 .kk.trtx span.oprd { color: #a7b4bb; }
+.kk.trtx span.rs {
+  padding-top: 1em;
+  display: block;
+  color: #9fbbca;
+}

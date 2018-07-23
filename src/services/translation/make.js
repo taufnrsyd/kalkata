@@ -48,18 +48,24 @@ const emptyWrap = wrapText('')
 /**
  * Translate the unit level of groups of threes.
  * @param {array} hundreds - Translated groups
+ * @param {boolean} isNegative - Signed negative
  */
-export const translateUnitLevel = hundreds => hundreds.map((unit, i) => {
-  if (i === hundreds.length - 1) unit = capitalizeText(unit)
+export const translateUnitLevel = (hundreds, isNegative) => hundreds
+  .map((unit, i) => {
+    if (i === hundreds.length - 1 && ! isNegative) unit = capitalizeText(unit)
 
-  switch (true) {
-    case i % 4 === 1: return wrapText(to.thousand(unit))
-    case i % 4 === 2: return wrapText(to.million(unit))
-    case i % 4 === 3: return wrapText(to.billion(unit))
-    case i % 4 === 0 && i > 0: return wrapText(to.trillion(unit))
-    default: return wrapText(isNil(unit) ? '' : unit)
-  }
-}).reverse().filter(text => text !== emptyWrap).join(' ').trim()
+    switch (true) {
+      case i % 4 === 1: return wrapText(to.thousand(unit))
+      case i % 4 === 2: return wrapText(to.million(unit))
+      case i % 4 === 3: return wrapText(to.billion(unit))
+      case i % 4 === 0 && i > 0: return wrapText(to.trillion(unit))
+      default: return wrapText(isNil(unit) ? '' : unit)
+    }
+  })
+  .reverse()
+  .filter(text => text !== emptyWrap)
+  .join(' ')
+  .trim()
 
 /**
  * Group the number's digits into group of threes.

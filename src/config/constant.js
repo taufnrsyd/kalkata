@@ -124,6 +124,6 @@ export const NUMBER_PADS = [
     text: '=',
     className: 'rsex',
     type: PAD_ACTIONS.RESULT,
-    key: false,
+    key: '=',
   }],
 ]
