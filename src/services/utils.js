@@ -7,8 +7,10 @@ import { groupNumberToThrees } from './translation/make'
 export const formatNumber = num => groupNumberToThrees(num)
   .map(group => group.join(''))
   .reverse()
-  .join(',')
-  .replace(/^0+/, '')
+  .join('.')
+  // see comments at
+  // https://stackoverflow.com/a/6676526/2189848
+  .replace(/^0+(?=\d)/, '')
 
 /**
  * Capitalize first letter of text.

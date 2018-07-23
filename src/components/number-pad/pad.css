@@ -1,29 +1,35 @@
 .kk.pad {
   width: 25vw;
-  height: 25vw;
+  height: 20vw;
   padding: 0;
   float: left;
   font-size: 1.5rem;
   font-family: inherit;
-  font-weight: normal;
+  font-weight: 300;
   text-align: center;
-  line-height: 25vw;
-  color: #989898;
-  background: #fafafa;
+  line-height: 20vw;
+  color: #a7b4bb;
+  background: transparent;
   border: none;
+  border-right: 1px solid #3f4d5d;
+  border-bottom: 1px solid #3f4d5d;
 }
 
-.kk.pad[class*="num-"] { background: #ffffff; }
+.kk.pad:last-child { border-right: none; }
+.kk.pad.num-0 { width: 75vw; }
+.kk.pad.alclr {
+  width: 50vw;
+  color: #fda085;
+}
 
-.kk.pad.alclr { color: #fda085; }
 .kk.pad.rmcr { color: #f6d365; }
-.kk.pad.rstg { background: #f0f0f0; }
+.kk.pad.rstg { color: #899ba2; }
+.kk.pad[class*="num-"] { color: #ffffff; }
 
 .kk.pad.rsex {
   font-size: 2rem;
-  color: #ffffff;
-  background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  background: #384350;
 }
 
-.kk.pad:active { background: #e3f2fd; }
+.kk.pad:active { background: #455263; }
 .kk.pad:focus { outline: none; }

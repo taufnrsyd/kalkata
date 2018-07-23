@@ -1,11 +1,41 @@
 export const PAD_ACTIONS = {
   NUMBER: 'PAD_ADD_NUMBER',
   OPERAND: 'PAD_SELECT_OPERAND',
-  SIGN: 'PAD_TOGGLE_SIGN',
   RESULT: 'PAD_CALCULATE_RESULT',
-  TOGGLE: 'PAD_TOGGLE_TRANSLATION',
   REMOVE: 'PAD_REMOVE_NUMBER',
   CLEAR: 'PAD_CLEAR_CALCULATION',
+}
+
+export const DIVISION = {
+  text: '/',
+  className: 'op-div',
+  type: PAD_ACTIONS.OPERAND,
+  key: '/',
+  priority: 4,
+}
+
+export const MULTIPLICATION = {
+  text: 'X',
+  className: 'op-mul',
+  type: PAD_ACTIONS.OPERAND,
+  key: '*',
+  priority: 3,
+}
+
+export const SUBTRACTION = {
+  text: '-',
+  className: 'op-sub',
+  type: PAD_ACTIONS.OPERAND,
+  key: '-',
+  priority: 2,
+}
+
+export const ADDITION = {
+  text: '+',
+  className: 'op-add',
+  type: PAD_ACTIONS.OPERAND,
+  key: '+',
+  priority: 1,
 }
 
 export const NUMBER_PADS = [
@@ -16,20 +46,12 @@ export const NUMBER_PADS = [
     type: PAD_ACTIONS.CLEAR,
     key: false,
   }, {
-    text: '+/-',
-    className: 'sign',
-    type: PAD_ACTIONS.SIGN,
+    text: 'C',
+    className: 'rmcr',
+    type: PAD_ACTIONS.REMOVE,
     key: false,
   }, {
-    text: '%',
-    className: 'op-mod',
-    type: PAD_ACTIONS.OPERAND,
-    key: '%',
-  }, {
-    text: '/',
-    className: 'op-div',
-    type: PAD_ACTIONS.OPERAND,
-    key: '/',
+    ...DIVISION
   }],
 
   /** Second row */
@@ -49,10 +71,7 @@ export const NUMBER_PADS = [
     type: PAD_ACTIONS.NUMBER,
     key: 9,
   }, {
-    text: 'X',
-    className: 'op-mul',
-    type: PAD_ACTIONS.OPERAND,
-    key: '*',
+    ...MULTIPLICATION
   }],
 
   /** Third row */
@@ -72,10 +91,7 @@ export const NUMBER_PADS = [
     type: PAD_ACTIONS.NUMBER,
     key: 6,
   }, {
-    text: '-',
-    className: 'op-sub',
-    type: PAD_ACTIONS.OPERAND,
-    key: '-',
+    ...SUBTRACTION
   }],
 
   /** Fourth row */
@@ -95,10 +111,7 @@ export const NUMBER_PADS = [
     type: PAD_ACTIONS.NUMBER,
     key: 3,
   }, {
-    text: '+',
-    className: 'op-add',
-    type: PAD_ACTIONS.OPERAND,
-    key: '+',
+    ...ADDITION
   }],
 
   /** Fifth row */
@@ -108,19 +121,9 @@ export const NUMBER_PADS = [
     type: PAD_ACTIONS.NUMBER,
     key: 0,
   }, {
-    text: 'C',
-    className: 'rmcr',
-    type: PAD_ACTIONS.REMOVE,
-    key: false,
-  }, {
-    text: 'T',
-    className: 'rstg',
-    type: PAD_ACTIONS.TOGGLE,
-    key: false,
-  }, {
     text: '=',
     className: 'rsex',
     type: PAD_ACTIONS.RESULT,
-    key: false,
+    key: '=',
   }],
 ]

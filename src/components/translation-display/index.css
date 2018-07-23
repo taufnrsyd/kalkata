@@ -1,17 +1,28 @@
 .kk.trns {
   width: 100%;
   height: calc(100% - 2.8571428571em);
-  padding: 0.8571428571em 0.8571428571em 0;
+  background: #404d5d;
 }
 
 .kk.trtx {
   width:100%;
   height: 100%;
-  padding-bottom: 0.8571428571em;
+  padding: 2.5em 0.8571428571em 0.8571428571em;
   overflow: auto;
 }
 
 .kk.trtx {
   font-size: 1.1428571429rem;
   color: #ffffff;
+}
+
+.kk.trtx p { margin-bottom: 0.125em; }
+
+.kk.trtx span.num:nth-child(odd) { color: #ffffff; }
+.kk.trtx span.num:nth-child(even) { color: #fda085; }
+.kk.trtx span.oprd { color: #a7b4bb; }
+.kk.trtx span.rs {
+  padding-top: 1em;
+  display: block;
+  color: #9fbbca;
 }
