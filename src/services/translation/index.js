@@ -41,7 +41,6 @@ export default {
    */
   operand: key => {
     switch (key) {
-      case '%': return wrapText('Modulus', { oprd: true })
       case '/': return wrapText('Dibagi', { oprd: true })
       case '*': return wrapText('Dikali', { oprd: true })
       case '-': return wrapText('Dikurang', { oprd: true })

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import calculation from './services/calculation'
 import translation from './services/translation'
 import { NUMBER_PADS, PAD_ACTIONS } from './config/constant'
 import {
@@ -11,6 +12,9 @@ import './app.css'
 
 class App extends Component {
   state = {
+    /** Flag that a calculation has been performed */
+    isCalculated: false,
+
     /** User input value */
     number: [''],
 
@@ -39,9 +43,15 @@ class App extends Component {
       text.push(forNumber ? '' : null)
       pointer++
     } else {
-      number.pop()
-      text.pop()
-      pointer--
+      if (pointer < 1) {
+        number = ['']
+        text = ['']
+        pointer = 0
+      } else {
+        number.pop()
+        text.pop()
+        pointer--
+      }
     }
 
     this.setState({ number, text, pointer })
@@ -68,6 +78,7 @@ class App extends Component {
     switch (pad.type) {
       case PAD_ACTIONS.NUMBER: return this.handleNumberInput(pad)
       case PAD_ACTIONS.OPERAND: return this.handleOperandInput(pad)
+      case PAD_ACTIONS.RESULT: return this.performCalculation()
       case PAD_ACTIONS.REMOVE: return this.handleInputRemove()
       case PAD_ACTIONS.CLEAR: return this.clearCalculation()
       default: return
@@ -117,20 +128,39 @@ class App extends Component {
   }
 
   /**
+   * Perform the calculation based on current calculation.
+   */
+  performCalculation() {
+    calculation.perform(this.state.number).then(
+      resp => console.log(resp)
+    )
+  }
+
+  /**
    * Handle number input removal.
    */
   handleInputRemove() {
-    let pointed = this.state.number[this.state.pointer]
-    let input
+    const currentItem = this.state.number[this.state.pointer]
+    const isOperandRemoval = typeof currentItem === 'object'
+    // Wait out for pointer checker below
+    const waitOut = setTimeout(() => {
+      const newItem = this.state.number[this.state.pointer]
 
-    if (typeof pointed === 'object') {
+      clearTimeout(waitOut)
+      if ( ! isOperandRemoval && typeof newItem === 'string') {
+        const sliced = newItem.slice(0, newItem.length - 1)
+
+        if (sliced === '') {
+          this.movePointer({ isForward: false })
+        } else {
+          translation.make(sliced).then(this.updateNumberAndText.bind(this))
+        }
+      }
+    }, 50)
+
+    if (isOperandRemoval || currentItem === '') {
       this.movePointer({ isForward: false })
     }
-
-    pointed = this.state.number[this.state.pointer]
-    input = pointed.slice(0, pointed.length - 1)
-
-    translation.make(input).then(this.updateNumberAndText.bind(this))
   }
 
   /**

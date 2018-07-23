@@ -42,9 +42,7 @@ export const translateGroupOfThrees = threes => threes.map(group => {
   }).join(' ').trim()
 })
 
-/**
- * Empty text wrapped for comparison on `translateUnitLevel`.
- */
+/** Empty text wrapped for comparison on `translateUnitLevel` */
 const emptyWrap = wrapText('')
 
 /**

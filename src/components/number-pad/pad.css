@@ -16,11 +16,15 @@
 }
 
 .kk.pad:last-child { border-right: none; }
+.kk.pad.num-0 { width: 75vw; }
+.kk.pad.alclr {
+  width: 50vw;
+  color: #fda085;
+}
 
-.kk.pad[class*="num-"] { color: #ffffff; }
-.kk.pad.alclr { color: #fda085; }
 .kk.pad.rmcr { color: #f6d365; }
 .kk.pad.rstg { color: #899ba2; }
+.kk.pad[class*="num-"] { color: #ffffff; }
 
 .kk.pad.rsex {
   font-size: 2rem;
