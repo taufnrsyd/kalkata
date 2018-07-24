@@ -100,7 +100,13 @@ class App extends Component {
       translation.make(input).then(this.updateNumberAndText.bind(this))
     }, 50)
 
-    if (typeof pointed === 'object') {
+    if (this.state.isCalculated) {
+      // if the app has completed a calculation,
+      // clear up the previous one to start a new calculation
+      this.clearCalculation()
+    } else if (typeof pointed === 'object') {
+      // if the current las item of the number is an operand
+      // move the pointer forward and add a new member for number in the array
       this.movePointer({ isForward: true, forNumber: true })
     }
   }
@@ -122,7 +128,13 @@ class App extends Component {
       this.setState({ number, text })
     }, 50)
 
-    if (typeof pointed === 'string') {
+    if (this.state.isCalculated) {
+      // if the app has completed a calculation,
+      // immediately use the result as the starting point for this calculation
+      this.pickUpCalculation()
+    } else if (typeof pointed === 'string') {
+      // if the current las item of the number is a number
+      // move the pointer forward and add a new member for operand in the array
       this.movePointer({ isForward: true, forNumber: false })
     }
   }
@@ -174,7 +186,12 @@ class App extends Component {
       }
     }, 50)
 
-    if (isOperandRemoval || currentItem === '') {
+    if (this.state.isCalculated) {
+      // if the app has completed a calculation,
+      // immediately clear that one first
+      this.clearCalculation()
+    } else if (isOperandRemoval || currentItem === '') {
+      // otherwise, move the pointer backward depending on the current item
       this.movePointer({ isForward: false })
     }
   }
@@ -187,6 +204,23 @@ class App extends Component {
       number: [''],
       pointer: 0,
       text: [''],
+      isCalculated: false,
+    })
+  }
+
+  /**
+   * Partially clear the calculation to pick up for a new one.
+   */
+  pickUpCalculation() {
+    const pointTo = this.state.pointer + 2
+    const number = [this.state.number[pointTo], null]
+    const text = [this.state.text[pointTo], null]
+
+    this.setState({
+      number,
+      text,
+      pointer: 1,
+      isCalculated: false,
     })
   }
 
@@ -194,8 +228,6 @@ class App extends Component {
    * Render the component.
    */
   render() {
-    console.log(this.state.text)
-    console.log(this.state.number)
     const number = translation.weaveNumber(this.state.number)
 
     return (

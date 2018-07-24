@@ -1,6 +1,4 @@
-.kk.npad {
-  width: 100vw;
-}
+.kk.npad { width: 100%; }
 
 .kk.npad.row::after {
   content: "";

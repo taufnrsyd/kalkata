@@ -1,10 +1,5 @@
 import { numbers } from './dictionary'
-import {
-  isDirectlyTranslatable,
-  isNil,
-  to,
-  wrapText,
-} from './helper'
+import { is, to, wrapText } from './helper'
 import { capitalizeText } from '../utils'
 
 /**
@@ -14,7 +9,7 @@ import { capitalizeText } from '../utils'
 export const translateGroupOfThrees = threes => threes.map(group => {
   const num = to.number(group.join(''))
 
-  if (isDirectlyTranslatable(num)) {
+  if (is.directlyTranslatable(num)) {
     // number is directly translatable, just return from the dictionary
     return numbers[num]
 
@@ -59,7 +54,7 @@ export const translateUnitLevel = (hundreds, isNegative) => hundreds
       case i % 4 === 2: return wrapText(to.million(unit))
       case i % 4 === 3: return wrapText(to.billion(unit))
       case i % 4 === 0 && i > 0: return wrapText(to.trillion(unit))
-      default: return wrapText(isNil(unit) ? '' : unit)
+      default: return wrapText(is.nil(unit) ? '' : unit)
     }
   })
   .reverse()

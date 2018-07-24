@@ -1,5 +1,5 @@
 import { numbers } from './dictionary'
-import { isDirectlyTranslatable, wrapText } from './helper'
+import { is, wrapText } from './helper'
 import {
   groupNumberToThrees,
   translateGroupOfThrees,
@@ -27,7 +27,10 @@ export default {
     if (num === '') {
       resolve({ input, translation: '' })
 
-    } else if (isDirectlyTranslatable(num)) {
+    } else if (is.infinity(num)) {
+      resolve({ input, translation: 'Tak terhingga' })
+
+    } else if (is.directlyTranslatable(num)) {
       const text = numbers[num]
       const translation = isNegativeNumber ?
         `${neg} ${wrapText(text)}` :
@@ -68,6 +71,9 @@ export default {
     .map(item => {
       if (item === null) return ''
       else if (typeof item === 'object') return item.key
+
+      // check for infinity
+      if (is.infinity(item)) return '&infin;'
 
       if (item.charAt(0) === '-') {
         const formatted = formatNumber(item.slice(1))

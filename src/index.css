@@ -1,4 +1,12 @@
 body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: 300;
-  background: #3a4654;
+  background-image: linear-gradient(135deg, #323d4a 10%, #1d2329 100%);
+}
+
+div#root {
+  width: 100%;
+  height: auto;
 }

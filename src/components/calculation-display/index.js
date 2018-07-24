@@ -9,7 +9,7 @@ import './index.css'
 const CalculationDisplay = ({ calculation }) => (
   <div className="kk calc">
     <div className="kk cltx">
-      <p>{calculation}</p>
+      <p dangerouslySetInnerHTML={{ __html: calculation }} />
     </div>
   </div>
 )
