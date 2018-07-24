@@ -228,7 +228,6 @@ class App extends Component {
    * Render the component.
    */
   render() {
-    console.log(this.state)
     const number = translation.weaveNumber(this.state.number)
 
     return (
