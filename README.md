@@ -19,3 +19,7 @@ As explained above, the app does not provide full blown calculator features such
 You are free to fork this project and make your own version of the calculator. Nonetheless, a tribute to this me ([@taufnrsyd](https://github.com/taufnrsyd)) or this [repo](https://github.com/taufnrsyd/kalkata) is very much appreciated.
 
 Note that this project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app), so you might want to familiarize yourself with the tool in case you haven't.
+
+### Attribution
+
+The UI of the app is heavily based on [this Dribble](https://dribbble.com/shots/2311064-Calculator) by [Oleg Frolov](http://volorf.dribbble.com/).
